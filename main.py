@@ -34,15 +34,16 @@ def teoremFour(mr: list) -> list:
                     productRow += currentMatrix[k][indexColumn] * currentMatrix[index][k]
                 try:
                     holder[index][indexColumn] = productRow and 1
+                    mr[index][indexColumn] = mr[index][indexColumn] or holder[index][indexColumn]
                 except:
                     print("lol")
         matrices.append(holder)
         currentMatrix = holder.copy()
-
-    for matrix in matrices:
-        for indexRow, row in enumerate(matrix):
-            for indexColumn, column in enumerate(row):
-                mr[indexRow][indexColumn] = mr[indexRow][indexColumn] or column
+    #
+    # for matrix in matrices:
+    #     for indexRow, row in enumerate(matrix):
+    #         for indexColumn, column in enumerate(row):
+    #             mr[indexRow][indexColumn] = mr[indexRow][indexColumn] or column
 
     return mr
 

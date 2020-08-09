@@ -6,15 +6,15 @@ def warshall(a):
 
     assert (len(row) == len(a) for row in a)
 
-    # Number of elements in the matrix
+    # Numero de elementos en la matriz
     n = len(a)
-    for k in range(n):
+    for m in range(n):
         for i in range(n):
             for j in range(n):
-                # we use the ord with the original positions  i, j  because  we want  to mantain the connections in the matrix
-                # We search here if there is  any pair i,k that has transitvity to k,j
-                # So  if this happens i,j would have a new connection though i,k and k,j
-                a[i][j] = a[i][j] or (a[i][k] and a[k][j])
+                # usamos a[i][j] or (a[i][m] and a[m][j]) porque queremos guardar la connecion ya obtenida de la matriz original
+                # Miramos is hay un par ik, que  tenga  transitividad  con k,j para saber que hay vertices interiores dentro de  i,j
+                # E ir llenando la matriz de cierre transitivo.
+                a[i][j] = a[i][j] or (a[i][m] and a[m][j])
     return a
 
 
@@ -24,26 +24,26 @@ def teoremFour(mr: list) -> list:
     n = len(mr)
     currentMatrix = mr.copy()
     matrices = []
+
+    # Se itera el numero de n - 1 veces para tener las matrices Rn se itera n-1 debido a que 1 es la matriz original
+    # Ya se tiene que en este caso es mr
     for i in range(n - 1):
         holder = [[None for _ in range(n)] for _ in range(n)]
         for index, row in enumerate(currentMatrix):
-
             for indexColumn, column in enumerate(row):
                 productRow = 0
                 for k in range(n):
+                    # Hace profucto punto para saber el valor de la matriz Rn en el punto index, indexColumn
                     productRow += currentMatrix[k][indexColumn] * currentMatrix[index][k]
-                try:
-                    holder[index][indexColumn] = productRow and 1
-                    mr[index][indexColumn] = mr[index][indexColumn] or holder[index][indexColumn]
-                except:
-                    print("lol")
+
+                # Guarda la matriz para realizar la siguiente matriz al cuadrado
+                # Se usa and para  guardar 1 o 0
+                holder[index][indexColumn] = productRow and 1
+                # Or con el valor del resultado de Rn para ir viendo los puntos que conecta indirectamente
+                mr[index][indexColumn] = mr[index][indexColumn] or holder[index][indexColumn]
+
         matrices.append(holder)
         currentMatrix = holder.copy()
-    #
-    # for matrix in matrices:
-    #     for indexRow, row in enumerate(matrix):
-    #         for indexColumn, column in enumerate(row):
-    #             mr[indexRow][indexColumn] = mr[indexRow][indexColumn] or column
 
     return mr
 

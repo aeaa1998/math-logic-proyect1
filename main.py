@@ -1,5 +1,4 @@
-from functools import reduce
-
+import numpy as np
 
 def warshall(a):
     # Checks  the matrix is square
@@ -48,7 +47,7 @@ def teoremFour(mr: list) -> list:
     return mr
 
 print("---WARSHALL ALGORITHM---")
-print(warshall([[0, 0, 0, 1], [1, 0, 1, 0], [1, 0, 0, 1], [0, 0, 1, 0]]))
+print(np.matrix(warshall([[0, 0, 0, 1], [1, 0, 1, 0], [1, 0, 0, 1], [0, 0, 1, 0]])))
 
 print("---Teorema 4---")
-print(teoremFour([[0, 0, 0, 1], [1, 0, 1, 0], [1, 0, 0, 1], [0, 0, 1, 0]]))
+print(np.matrix(teoremFour([[0, 0, 0, 1], [1, 0, 1, 0], [1, 0, 0, 1], [0, 0, 1, 0]])))
